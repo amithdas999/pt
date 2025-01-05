@@ -1,0 +1,124 @@
+a=prev.getTime();
+if(a>450)
+{
+	Failure=true;
+	FailureMessage="Script stop if response time more than 400 mili second";
+	SampleResult.setStopTestNow(true);
+}
+
+=========================
+
+if(SampleResult.getResponseCode().equals("400"))
+{
+	Failure= true;
+	FailureMessage="Script stop if response code is equal to 400";
+	SampleResult.setStopTestNow(true);
+	
+}
+
+===================================
+
+a=Integer.valueOf(prev.getSampleCount());
+b=Integer.valueOf(prev.getErrorCount());
+
+double test = b/a * 100;
+
+if(test>=40)
+{
+	Failure=true;
+	FailureMessage="Stop script if error come";
+	SampleResult.setStopTestNow(true);
+}
+
+===================================
+
+a=vars.get("name");
+b=vars.get("name1");
+c=vars.get("address");
+d=vars.get("age");
+
+FileWriter fw = new FileWriter("C:\\Users\\amitd\\OneDrive\\Desktop\\Jmeter_work_JMX\\18july.txt",true);
+fw.write(a+",,,"+b+",,,"+c+",,,"+d+ "\n");
+fw.close();
+
+========================================
+
+thread group 1
+${__setProperty(a,${name1})}
+${__setProperty(b,${address})}
+${__setProperty(c,${age})}
+
+thread group2
+${__property(a)}
+${__property(b)}
+${__property(c)}
+
+===========================================
+
+Condition - switch controller 
+
+a=Integer.valueOf(vars.get("code"));
+
+b=vars.get("text1");
+
+c=vars.get("text2");
+
+if(a==200 && b.equals("Hello Mr") && c.equals("logout"))
+{
+	vars.put("testing","0");
+}
+else
+{
+	vars.put("testing","1");
+}
+
+Switch Controller 
+Switch Value  ${testing}
+===============================================
+
+
+a=prev.getTime();
+if(a>500)
+{
+Failure=true;
+FailureMessage="Response time should not excced";
+SampleResult.setStopTestNow(true);
+}
+
+
+if(SampleResult.getResponseCode().equals("400") || SampleResult.getResponseCode().equals("500"))
+{
+	Failure=true;
+	FailureMessage="Server is down";
+	SampleResult.setStopTestNow(true);
+}
+
+
+// Error Percentage
+
+a=Integer.valueOf(prev.getSampleCount());
+b=Integer.valueOf(prev.getErrorCount());
+
+double test = b/a * 100;
+
+if(test>=40)
+{
+	SampleResult.setStopTestNow(true);
+}
+
+
+
+
+
+${__setProperty(interview,${text})}
+
+${__property(interview)}
+
+
+a=vars.get("text");
+FileWriter fw = new FileWriter("C:\\Users\\amitd\\OneDrive\\Desktop\\Resume\\repo\\1.txt",true);
+fw.write(a+ "\n");
+fw.close();
+
+
+
